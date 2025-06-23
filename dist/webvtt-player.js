@@ -463,6 +463,7 @@ function Ee(r) {
       }
     ) }),
     /* @__PURE__ */ n.jsxs("div", { className: "tracks", children: [
+      /* @__PURE__ */ n.jsx(je, { query: l, updateQuery: _ }),
       /* @__PURE__ */ n.jsx(
         fe,
         {
@@ -472,8 +473,7 @@ function Ee(r) {
         }
       ),
       w
-    ] }),
-    /* @__PURE__ */ n.jsx(je, { query: l, updateQuery: _ })
+    ] })
   ] }) });
 }
 export {

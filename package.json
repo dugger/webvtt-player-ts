@@ -1,5 +1,5 @@
 {
-  "name": "webvtt-player",
+  "name": "webvtt-player-ts",
   "version": "0.1.0",
   "description": "View WebVTT as a transcript",
   "author": "Ed Summers <ehs@pobox.com>",

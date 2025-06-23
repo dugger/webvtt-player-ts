@@ -1,19 +1,19 @@
-# webvtt-player
+# webvtt-player-ts
 
-*webvtt-player* is a [React] component, fully written in **TypeScript**, that lets you play an audio file while viewing its [WebVTT] subtitles as an interactive transcript. Take a look at the [example site] to get a sense of what this means.
+*webvtt-player-ts* is a [React] component, fully written in **TypeScript**, that lets you play an audio file while viewing its [WebVTT] subtitles as an interactive transcript. Take a look at the [example site] to get a sense of what this means.
 
-*webvtt-player* was developed as part of the [Unlocking the Airwaves] project which received generous support from the [National Endowment for the Humanities].
+*webvtt-player-ts* was developed as part of the [Unlocking the Airwaves] project which received generous support from the [National Endowment for the Humanities].
 
 ## Installation
 
 ```bash
-npm install webvtt-player
+npm install webvtt-player-ts
 ```
 
 ## Usage (TypeScript or JavaScript)
 
 ```tsx
-import { Player } from "webvtt-player";
+import { Player } from "webvtt-player-ts";
 
 <Player
   audio="https://example.org/audio.mp3"
@@ -34,7 +34,7 @@ import { Player } from "webvtt-player";
 #### TypeScript Example
 
 ```tsx
-import { Player } from "webvtt-player";
+import { Player } from "webvtt-player-ts";
 
 <Player
   audio="/audio.mp3"
@@ -65,7 +65,7 @@ The output will be in the `dist/` directory as both ESM and UMD modules.
 
 ## OHMS Metadata Track
 
-*webvtt-player* can also display a WebVTT metadata track. The metadata object is modeled after the [OHMS Indexing system](http://ohda.matrix.msu.edu/2014/11/indexing-interviews-in-ohms/).
+*webvtt-player-ts* can also display a WebVTT metadata track. The metadata object is modeled after the [OHMS Indexing system](http://ohda.matrix.msu.edu/2014/11/indexing-interviews-in-ohms/).
 
 Fields supported:
 
@@ -99,7 +99,7 @@ The metadata track can be loaded with the `metadata` parameter.
 
 ## Using Without React
 
-You can use webvtt-player outside of a React project if you use the built JavaScript bundle from the [latest release](https://github.com/umd-mith/webvtt-player/releases) directly in the browser. Simply provide an anchor element with the id `webvtt-player` and use `data-audio` and `data-transcript` attributes to point to the audio and transcript files (`data-metadata` is optional):
+You can use webvtt-player-ts outside of a React project if you use the built JavaScript bundle from the [latest release](https://github.com/umd-mith/webvtt-player/releases) directly in the browser. Simply provide an anchor element with the id `webvtt-player` and use `data-audio` and `data-transcript` attributes to point to the audio and transcript files (`data-metadata` is optional):
 
 ```html
 <div id="webvtt-player"
