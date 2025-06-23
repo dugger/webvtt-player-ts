@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Transcript from './Transcript'
-import Metadata from './Metadata'
-import Search from './Search'
+import Transcript from './Transcript.jsx'
+import Metadata from './Metadata.jsx'
+import Search from './Search.jsx'
 import './Player.css'
 
 class Player extends React.Component {

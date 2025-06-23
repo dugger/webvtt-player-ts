@@ -1,20 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import MetadataPoint from './MetadataPoint'
+import TranscriptLine from './TranscriptLine.jsx'
 import './Track.css'
 
-class Metadata extends React.Component {
+class Transcript extends React.Component {
 
   render() {
     const lines = []
     if (this.props.track && this.props.track.cues) {
       for (let i = 0; i < this.props.track.cues.length; i++) {
         lines.push(
-          <MetadataPoint
-            key={`point-${i}`}
+          <TranscriptLine
+            key={`line-${i}`}
             cue={this.props.track.cues[i]} 
             active={false} 
-            seek={this.props.seek} />
+            seek={this.props.seek} 
+            query={this.props.query} />
         )
       }
     }
@@ -27,10 +28,11 @@ class Metadata extends React.Component {
 
 }
 
-Metadata.propTypes = {
+Transcript.propTypes = {
   track: PropTypes.object,
   url: PropTypes.string,
-  seek: PropTypes.func
+  seek: PropTypes.func,
+  query: PropTypes.string
 }
 
-export default Metadata
+export default Transcript
