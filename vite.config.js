@@ -4,9 +4,10 @@ import { resolve } from 'path';
 
 export default defineConfig({
   plugins: [react()],
+  root: 'example',
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.js'),
+      entry: resolve(__dirname, 'src/index.ts'),
       name: 'webvttPlayer',
       fileName: 'webvtt-player',
       formats: ['es', 'umd']
@@ -24,12 +25,5 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true
-  },
-  optimizeDeps: {
-    esbuildOptions: {
-      loader: {
-        '.js': 'jsx'
-      }
-    }
   }
 }); 
