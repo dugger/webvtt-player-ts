@@ -1,9 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { MetadataCue, VTTCueLike } from './types'
 import './MetadataPoint.css'
 
-function MetadataPoint({ cue, seek }) {
-  const data = JSON.parse(cue.text)
+export interface MetadataPointProps {
+  cue: VTTCueLike;
+  seek: (secs: number) => void;
+}
+
+function MetadataPoint({ cue, seek }: MetadataPointProps) {
+  const data: MetadataCue = JSON.parse(cue.text)
   const titleAlt = data.title_alt ? <h3 className="titleAlt">{data.title_alt}</h3> : ''
   const synopsis = data.synopsis ? (
     <div className="field">
@@ -69,20 +74,13 @@ function MetadataPoint({ cue, seek }) {
   )
 }
 
-function startTime(t) {
+function startTime(t: number): string {
   return formatSeconds(t)
 }
-function formatSeconds(t) {
-  let mins = Math.floor(t / 60)
-  if (mins < 10) mins = `0${mins}`
-  let secs = Math.floor(t % 60)
-  if (secs < 10) secs = `0${secs}`
-  return `${mins}:${secs}`
+function formatSeconds(t: number): string {
+  const mins = Math.floor(t / 60);
+  const secs = Math.floor(t % 60);
+  return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
 }
 
-MetadataPoint.propTypes = {
-  cue: PropTypes.object,
-  seek: PropTypes.func,
-}
-
-export default MetadataPoint
+export default MetadataPoint;

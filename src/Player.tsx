@@ -1,24 +1,37 @@
 import React, { useState, useRef, useEffect } from 'react'
-import PropTypes from 'prop-types'
-import Transcript from './Transcript.jsx'
-import Metadata from './Metadata.jsx'
-import Search from './Search.jsx'
+import Transcript from './Transcript'
+import Metadata from './Metadata'
+import Search from './Search'
+import { VTTCueLike } from './types'
 import './Player.css'
 
-function Player(props) {
+export interface PlayerProps {
+  audio?: string
+  transcript?: string
+  metadata?: string
+  preload?: boolean
+  query?: string
+}
+
+function Player(props: PlayerProps) {
   const [loaded, setLoaded] = useState(false)
   const [query, setQuery] = useState('')
-  const track = useRef()
-  const metatrack = useRef()
-  const audio = useRef()
+  const track = useRef<HTMLTrackElement>(null)
+  const metatrack = useRef<HTMLTrackElement>(null)
+  const audio = useRef<HTMLAudioElement>(null)
 
   // Attach native load event to <track> on mount
   useEffect(() => {
     const currentTrack = track.current
+    function onTrackLoaded() {
+      const t = track.current && (track.current as any).track as { cues: VTTCueLike[] }
+      if (t && t.cues && t.cues.length > 0) {
+        setLoaded(true)
+      }
+    }
     if (currentTrack) {
       currentTrack.addEventListener('load', onTrackLoaded)
     }
-    // Fallback: also check if cues are already available
     onLoaded()
     return () => {
       if (currentTrack) {
@@ -29,39 +42,32 @@ function Player(props) {
   }, [])
 
   function onLoaded() {
-    const t = track.current && track.current.track
+    const t = track.current && (track.current as any).track as { cues: VTTCueLike[] }
     if (t && t.cues && t.cues.length > 0) {
       setLoaded(true)
     }
   }
 
-  function onTrackLoaded() {
-    const t = track.current && track.current.track
-    if (t && t.cues && t.cues.length > 0) {
-      setLoaded(true)
-    }
-  }
-
-  function seek(secs) {
+  function seek(secs: number) {
     if (audio.current) {
       audio.current.currentTime = secs
       audio.current.play()
     }
   }
 
-  function updateQuery(q) {
+  function updateQuery(q: string) {
     setQuery(q)
   }
 
-  let trackObj = null
-  let metatrackObj = null
+  let trackObj: { cues: VTTCueLike[] } | null = null
+  let metatrackObj: { cues: VTTCueLike[] } | null = null
   if (loaded) {
-    trackObj = track.current.track
-    metatrackObj = metatrack.current.track
+    trackObj = track.current && (track.current as any).track as { cues: VTTCueLike[] }
+    metatrackObj = metatrack.current && (metatrack.current as any).track as { cues: VTTCueLike[] }
   }
   const preload = props.preload ? 'true' : 'false'
   const metadata = props.metadata ? (
-    <Metadata url={props.metadata} seek={seek} track={metatrackObj} />
+    <Metadata seek={seek} track={metatrackObj ?? undefined} />
   ) : (
     ''
   )
@@ -89,9 +95,8 @@ function Player(props) {
         </div>
         <div className="tracks">
           <Transcript 
-            url={props.transcript} 
             seek={seek} 
-            track={trackObj} 
+            track={trackObj ?? undefined} 
             query={query} />
           {metadata}
         </div>
@@ -99,14 +104,6 @@ function Player(props) {
       </div>
     </div>
   )
-}
-
-Player.propTypes = {
-  audio: PropTypes.string,
-  transcript: PropTypes.string,
-  metadata: PropTypes.string,
-  preload: PropTypes.bool,
-  query: PropTypes.string
 }
 
 export default Player

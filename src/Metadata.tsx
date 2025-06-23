@@ -1,9 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import MetadataPoint from './MetadataPoint.jsx'
+import MetadataPoint from './MetadataPoint'
+import { VTTCueLike } from './types'
 import './Track.css'
 
-function Metadata({ track, seek, url }) {
+export interface MetadataProps {
+  track?: { cues: VTTCueLike[] };
+  seek?: (secs: number) => void;
+}
+
+function Metadata({ track, seek }: MetadataProps) {
   const lines = []
   if (track && track.cues) {
     for (let i = 0; i < track.cues.length; i++) {
@@ -11,19 +16,12 @@ function Metadata({ track, seek, url }) {
         <MetadataPoint
           key={`point-${i}`}
           cue={track.cues[i]}
-          active={false}
-          seek={seek}
+          seek={seek!}
         />
       )
     }
   }
   return <div className="track">{lines}</div>
-}
-
-Metadata.propTypes = {
-  track: PropTypes.object,
-  url: PropTypes.string,
-  seek: PropTypes.func,
 }
 
 export default Metadata

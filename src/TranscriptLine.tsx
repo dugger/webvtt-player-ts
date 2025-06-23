@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
+import { VTTCueLike } from './types'
 import './TranscriptLine.css'
 
-function TranscriptLine({ cue, seek, query }) {
+export interface TranscriptLineProps {
+  cue: VTTCueLike
+  seek: (secs: number) => void
+  query?: string
+}
+
+function TranscriptLine({ cue, seek, query }: TranscriptLineProps) {
   const [isActive, setIsActive] = useState(false)
 
   useEffect(() => {
@@ -32,24 +38,16 @@ function TranscriptLine({ cue, seek, query }) {
   )
 }
 
-function startTime(t) {
+function startTime(t: number): string {
   return formatSeconds(t)
 }
-function endTime(t) {
+function endTime(t: number): string {
   return formatSeconds(t)
 }
-function formatSeconds(t) {
-  let mins = Math.floor(t / 60)
-  if (mins < 10) mins = `0${mins}`
-  let secs = Math.floor(t % 60)
-  if (secs < 10) secs = `0${secs}`
-  return `${mins}:${secs}`
+function formatSeconds(t: number): string {
+  const mins = Math.floor(t / 60);
+  const secs = Math.floor(t % 60);
+  return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
 }
 
-TranscriptLine.propTypes = {
-  cue: PropTypes.object,
-  seek: PropTypes.func,
-  query: PropTypes.string,
-}
-
-export default TranscriptLine
+export default TranscriptLine;
