@@ -4,6 +4,7 @@
   "description": "View WebVTT as a transcript",
   "author": "Ed Summers <ehs@pobox.com>",
   "license": "MIT",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/edsu/webvtt-player.git"
@@ -26,16 +27,15 @@
     "start": "vite --port 3000"
   },
   "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
     "@vitejs/plugin-react": "^4.2.0",
-    "vite": "^6.2.0",
+    "autoprefixer": "^10.4.21",
     "eslint": "^9.29.0",
     "eslint-plugin-react": "^7.37.5",
-    "prop-types": "^15.8.1",
-    "autoprefixer": "^10.4.21",
     "postcss": "^8.4.0",
     "typescript": "^5.4.0",
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0"
+    "vite": "^6.2.0"
   },
   "dependencies": {
     "react": "^19.1.0",
