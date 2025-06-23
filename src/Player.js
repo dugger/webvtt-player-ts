@@ -20,12 +20,23 @@ class Player extends React.Component {
 
     this.onLoaded = this.onLoaded.bind(this)
     this.seek = this.seek.bind(this)
-    this.checkIfLoaded = this.checkIfLoaded.bind(this)
+    this.onTrackLoaded = this.onTrackLoaded.bind(this)
     this.updateQuery = this.updateQuery.bind(this)
   }
 
   componentDidMount() {
-    this.checkIfLoaded()
+    // Attach native load event to <track>
+    if (this.track.current) {
+      this.track.current.addEventListener('load', this.onTrackLoaded);
+    }
+    // Fallback: also check if cues are already available
+    this.onLoaded();
+  }
+
+  componentWillUnmount() {
+    if (this.track.current) {
+      this.track.current.removeEventListener('load', this.onTrackLoaded);
+    }
   }
 
   render () {
@@ -78,17 +89,17 @@ class Player extends React.Component {
   }
 
   onLoaded() {
-    this.setState({loaded: true})
+    // fallback: if cues are already available
+    const track = this.track.current && this.track.current.track;
+    if (track && track.cues && track.cues.length > 0) {
+      this.setState({ loaded: true })
+    }
   }
 
-  checkIfLoaded(tries=0) {
-    tries += 1
-    const e = this.track.current
-    if (e && e.track && e.track.cues && e.track.cues.length > 0) {
-      this.onLoaded()
-    } else if (! this.state.loaded) {
-      const wait = 25 * Math.pow(tries, 2)
-      setTimeout(this.checkIfLoaded, wait, tries)
+  onTrackLoaded() {
+    const track = this.track.current && this.track.current.track;
+    if (track && track.cues && track.cues.length > 0) {
+      this.setState({ loaded: true })
     }
   }
 
