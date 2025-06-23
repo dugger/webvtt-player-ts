@@ -94,13 +94,13 @@ function Player(props: PlayerProps) {
           </audio>
         </div>
         <div className="tracks">
+          <Search query={query} updateQuery={updateQuery} />
           <Transcript 
             seek={seek} 
             track={trackObj ?? undefined} 
             query={query} />
           {metadata}
         </div>
-        <Search query={query} updateQuery={updateQuery} />
       </div>
     </div>
   )
