@@ -1,117 +1,104 @@
-import React from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Transcript from './Transcript.jsx'
 import Metadata from './Metadata.jsx'
 import Search from './Search.jsx'
 import './Player.css'
 
-class Player extends React.Component {
+function Player(props) {
+  const [loaded, setLoaded] = useState(false)
+  const [query, setQuery] = useState('')
+  const track = useRef()
+  const metatrack = useRef()
+  const audio = useRef()
 
-  constructor() {
-    super()
-    this.state = {
-      loaded: false,
-      currentTime: 0,
-      query: ''
-    }
-    this.track = React.createRef()
-    this.metatrack = React.createRef()
-    this.audio = React.createRef()
-
-    this.onLoaded = this.onLoaded.bind(this)
-    this.seek = this.seek.bind(this)
-    this.onTrackLoaded = this.onTrackLoaded.bind(this)
-    this.updateQuery = this.updateQuery.bind(this)
-  }
-
-  componentDidMount() {
-    // Attach native load event to <track>
-    if (this.track.current) {
-      this.track.current.addEventListener('load', this.onTrackLoaded);
+  // Attach native load event to <track> on mount
+  useEffect(() => {
+    const currentTrack = track.current
+    if (currentTrack) {
+      currentTrack.addEventListener('load', onTrackLoaded)
     }
     // Fallback: also check if cues are already available
-    this.onLoaded();
-  }
+    onLoaded()
+    return () => {
+      if (currentTrack) {
+        currentTrack.removeEventListener('load', onTrackLoaded)
+      }
+    }
+    // eslint-disable-next-line
+  }, [])
 
-  componentWillUnmount() {
-    if (this.track.current) {
-      this.track.current.removeEventListener('load', this.onTrackLoaded);
+  function onLoaded() {
+    const t = track.current && track.current.track
+    if (t && t.cues && t.cues.length > 0) {
+      setLoaded(true)
     }
   }
 
-  render () {
-    let track = null
-    let metatrack = null
-    if (this.state.loaded) {
-      track = this.track.current.track
-      metatrack = this.metatrack.current.track
+  function onTrackLoaded() {
+    const t = track.current && track.current.track
+    if (t && t.cues && t.cues.length > 0) {
+      setLoaded(true)
     }
-    const preload = this.props.preload ? "true" : "false"
-    const metadata = this.props.metadata
-      ? <Metadata
-        url={this.props.metadata}
-        seek={this.seek}
-        track={metatrack} />
-      : ""
-    return (
-      <div className="webvtt-player">
-        <div className="media">
-          <div className="player">
-            <audio
-              controls
-              crossOrigin="anonymous"
-              onLoadedData={this.onLoaded}
-              preload={preload}
-              ref={this.audio}>
-              <source src={this.props.audio} />
-              <track default
-                kind="subtitles"
-                src={this.props.transcript}
-                ref={this.track} />
-              <track default
-                kind="metadata"
-                src={this.props.metadata}
-                ref={this.metatrack} />
-            </audio>
-          </div>
-          <div className="tracks">
-            <Transcript 
-              url={this.props.transcript} 
-              seek={this.seek} 
-              track={track} 
-              query={this.state.query} />
-            {metadata}
-          </div>
-          <Search query={this.state.query} updateQuery={this.updateQuery} />
+  }
+
+  function seek(secs) {
+    if (audio.current) {
+      audio.current.currentTime = secs
+      audio.current.play()
+    }
+  }
+
+  function updateQuery(q) {
+    setQuery(q)
+  }
+
+  let trackObj = null
+  let metatrackObj = null
+  if (loaded) {
+    trackObj = track.current.track
+    metatrackObj = metatrack.current.track
+  }
+  const preload = props.preload ? 'true' : 'false'
+  const metadata = props.metadata ? (
+    <Metadata url={props.metadata} seek={seek} track={metatrackObj} />
+  ) : (
+    ''
+  )
+
+  return (
+    <div className="webvtt-player">
+      <div className="media">
+        <div className="player">
+          <audio
+            controls
+            crossOrigin="anonymous"
+            onLoadedData={onLoaded}
+            preload={preload}
+            ref={audio}>
+            <source src={props.audio} />
+            <track default
+              kind="subtitles"
+              src={props.transcript}
+              ref={track} />
+            <track default
+              kind="metadata"
+              src={props.metadata}
+              ref={metatrack} />
+          </audio>
         </div>
+        <div className="tracks">
+          <Transcript 
+            url={props.transcript} 
+            seek={seek} 
+            track={trackObj} 
+            query={query} />
+          {metadata}
+        </div>
+        <Search query={query} updateQuery={updateQuery} />
       </div>
-    )
-  }
-
-  onLoaded() {
-    // fallback: if cues are already available
-    const track = this.track.current && this.track.current.track;
-    if (track && track.cues && track.cues.length > 0) {
-      this.setState({ loaded: true })
-    }
-  }
-
-  onTrackLoaded() {
-    const track = this.track.current && this.track.current.track;
-    if (track && track.cues && track.cues.length > 0) {
-      this.setState({ loaded: true })
-    }
-  }
-
-  seek(secs) {
-    this.audio.current.currentTime = secs
-    this.audio.current.play()
-  }
-
-  updateQuery(query) {
-    this.setState({query: query})
-  }
-
+    </div>
+  )
 }
 
 Player.propTypes = {

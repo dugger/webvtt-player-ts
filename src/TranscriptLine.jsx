@@ -1,74 +1,49 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import './TranscriptLine.css'
 
-class TranscriptLine extends React.Component {
+function TranscriptLine({ cue, seek, query }) {
+  const [isActive, setIsActive] = useState(false)
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      isActive: false
-    }
-    this.props.cue.onenter = this.onEnter.bind(this)
-    this.props.cue.onexit = this.onExit.bind(this)
-    this.onClick = this.onClick.bind(this)
+  useEffect(() => {
+    cue.onenter = () => setIsActive(true)
+    cue.onexit = () => setIsActive(false)
+    // Cleanup not needed as these are overwritten on unmount
+    // eslint-disable-next-line
+  }, [cue])
+
+  let style = ''
+  if (query && cue.text.match(new RegExp(query, 'i'))) {
+    style = 'match'
+  } else if (isActive) {
+    style = 'active'
   }
 
-  render() {
-    let style = ''
-    if (this.props.query && this.props.cue.text.match(new RegExp(this.props.query, 'i'))) {
-      style = 'match'
-    } else if (this.state.isActive) {
-      style = 'active'
-    }
-
-    // note: dangerouslySetInnerHTML is used because the text may contain HTML
-    return (
-      <div className={`${style} line`} onClick={this.onClick}>
-        <div className="time">
-          [{this.startTime()} - {this.endTime()}]
-        </div>
-        <div
-          className={`${style} text`}
-          dangerouslySetInnerHTML={{__html: this.props.cue.text}} />
+  return (
+    <div className={`${style} line`} onClick={() => seek(cue.startTime)}>
+      <div className="time">
+        [{startTime(cue.startTime)} - {endTime(cue.endTime)}]
       </div>
-    )
-  }
+      <div
+        className={`${style} text`}
+        dangerouslySetInnerHTML={{ __html: cue.text }}
+      />
+    </div>
+  )
+}
 
-  onEnter() {
-    this.setState({isActive: true})
-  }
-
-  onExit() {
-    this.setState({isActive: false})
-  }
-
-  onClick() {
-    this.props.seek(this.props.cue.startTime)
-  }
-
-  startTime() {
-    return this.formatSeconds(this.props.cue.startTime)
-  }
-
-  endTime() {
-    return this.formatSeconds(this.props.cue.endTime)
-  }
-
-  formatSeconds(t) {
-    let mins = Math.floor(t / 60)
-    if (mins < 10) {
-      mins = `0${mins}`
-    }
-
-    let secs = Math.floor(t % 60)
-    if (secs < 10) {
-      secs = `0${secs}`
-    }
-
-    return `${mins}:${secs}`
-  }
-
+function startTime(t) {
+  return formatSeconds(t)
+}
+function endTime(t) {
+  return formatSeconds(t)
+}
+function formatSeconds(t) {
+  let mins = Math.floor(t / 60)
+  if (mins < 10) mins = `0${mins}`
+  let secs = Math.floor(t % 60)
+  if (secs < 10) secs = `0${secs}`
+  return `${mins}:${secs}`
 }
 
 TranscriptLine.propTypes = {
