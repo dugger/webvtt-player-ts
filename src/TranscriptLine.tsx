@@ -15,7 +15,7 @@ function TranscriptLine({ cue, seek, query }: TranscriptLineProps) {
     cue.onenter = () => setIsActive(true)
     cue.onexit = () => setIsActive(false)
     // Cleanup not needed as these are overwritten on unmount
-    // eslint-disable-next-line
+     
   }, [cue])
 
   let style = ''
