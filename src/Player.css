@@ -15,7 +15,6 @@
 
 .webvtt-player .tracks {
   display: flex;
-  flex-wrap: wrap;
 }
 
 .webvtt-player .controls {

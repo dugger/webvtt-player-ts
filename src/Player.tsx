@@ -13,10 +13,6 @@ export interface PlayerProps {
   query?: string
 }
 
-interface TrackWithCues {
-  cues: VTTCueLike[]
-}
-
 function Player(props: PlayerProps) {
   const [loaded, setLoaded] = useState(false)
   const [query, setQuery] = useState('')
@@ -28,7 +24,7 @@ function Player(props: PlayerProps) {
   useEffect(() => {
     const currentTrack = track.current
     function onTrackLoaded() {
-      const t = track.current && (track.current as unknown as { track: TrackWithCues }).track
+      const t = track.current && (track.current as any).track as { cues: VTTCueLike[] }
       if (t && t.cues && t.cues.length > 0) {
         setLoaded(true)
       }
@@ -42,11 +38,11 @@ function Player(props: PlayerProps) {
         currentTrack.removeEventListener('load', onTrackLoaded)
       }
     }
-     
+    // eslint-disable-next-line
   }, [])
 
   function onLoaded() {
-    const t = track.current && (track.current as unknown as { track: TrackWithCues }).track
+    const t = track.current && (track.current as any).track as { cues: VTTCueLike[] }
     if (t && t.cues && t.cues.length > 0) {
       setLoaded(true)
     }
@@ -63,11 +59,11 @@ function Player(props: PlayerProps) {
     setQuery(q)
   }
 
-  let trackObj: TrackWithCues | null = null
-  let metatrackObj: TrackWithCues | null = null
+  let trackObj: { cues: VTTCueLike[] } | null = null
+  let metatrackObj: { cues: VTTCueLike[] } | null = null
   if (loaded) {
-    trackObj = track.current && (track.current as unknown as { track: TrackWithCues }).track
-    metatrackObj = metatrack.current && (metatrack.current as unknown as { track: TrackWithCues }).track
+    trackObj = track.current && (track.current as any).track as { cues: VTTCueLike[] }
+    metatrackObj = metatrack.current && (metatrack.current as any).track as { cues: VTTCueLike[] }
   }
   const preload = props.preload ? 'true' : 'false'
   const metadata = props.metadata ? (
@@ -98,13 +94,13 @@ function Player(props: PlayerProps) {
           </audio>
         </div>
         <div className="tracks">
-          <Search query={query} updateQuery={updateQuery} />
           <Transcript 
             seek={seek} 
             track={trackObj ?? undefined} 
             query={query} />
           {metadata}
         </div>
+        <Search query={query} updateQuery={updateQuery} />
       </div>
     </div>
   )
