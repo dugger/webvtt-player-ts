@@ -10,6 +10,7 @@ if (root) {
       audio={root.dataset.audio}
       transcript={root.dataset.transcript}
       metadata={root.dataset.metadata}
+      searchPosition={root.dataset.searchPosition as 'top' | 'bottom'}
       preload={true} />
   )
 }

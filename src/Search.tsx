@@ -4,11 +4,14 @@ import './Search.css';
 export interface SearchProps {
   query: string;
   updateQuery: (query: string) => void;
+  position?: 'top' | 'bottom';
 }
 
-const Search = ({ query, updateQuery }: SearchProps) => {
+const Search = ({ query, updateQuery, position = 'bottom' }: SearchProps) => {
+  const positionClass = position === 'top' ? 'search-top' : 'search-bottom';
+  
   return (
-    <div className="search">
+    <div className={`search ${positionClass}`}>
       <div className="container">
         <span className="icon">🔍</span>
         <input

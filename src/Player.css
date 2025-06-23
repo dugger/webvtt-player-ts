@@ -28,3 +28,18 @@
   vertical-align: middle;
   width: 70%;
 }
+
+/* Search bar positioning */
+.webvtt-player .search-top {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+}
+
+.webvtt-player .search-bottom {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-top: 1px solid #ddd;
+}

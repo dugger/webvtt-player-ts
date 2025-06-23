@@ -11,6 +11,7 @@ export interface PlayerProps {
   metadata?: string
   preload?: boolean
   query?: string
+  searchPosition?: 'top' | 'bottom'
 }
 
 function Player(props: PlayerProps) {
@@ -38,7 +39,6 @@ function Player(props: PlayerProps) {
         currentTrack.removeEventListener('load', onTrackLoaded)
       }
     }
-    // eslint-disable-next-line
   }, [])
 
   function onLoaded() {
@@ -72,6 +72,9 @@ function Player(props: PlayerProps) {
     ''
   )
 
+  const searchComponent = <Search query={query} updateQuery={updateQuery} position={props.searchPosition || 'bottom'} />
+  const searchPosition = props.searchPosition || 'bottom'
+
   return (
     <div className="webvtt-player">
       <div className="media">
@@ -93,6 +96,7 @@ function Player(props: PlayerProps) {
               ref={metatrack} />
           </audio>
         </div>
+        {searchPosition === 'top' && searchComponent}
         <div className="tracks">
           <Transcript 
             seek={seek} 
@@ -100,7 +104,7 @@ function Player(props: PlayerProps) {
             query={query} />
           {metadata}
         </div>
-        <Search query={query} updateQuery={updateQuery} />
+        {searchPosition === 'bottom' && searchComponent}
       </div>
     </div>
   )
