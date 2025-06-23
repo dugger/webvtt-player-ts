@@ -22,38 +22,52 @@
 .webvtt-player .text {
   margin-left: 110px;
 }
-.webvtt-player .transcript {
+
+.webvtt-player .track {
+  flex: 6;
   height: 90vh;
   padding: 10px;
   overflow-y: scroll;
 }
-.webvtt-player .media {
-  width: 100%;
-  border: thin solid #ccc;
-  margin-right: auto;
-}
 
-.webvtt-player audio {
-  width: 100%;
-  background-color: #ccc;
-}
-
-.webvtt-player audio::-webkit-media-controls-panel {
-  background-color: #ccc;
-}
-
-
-.webvtt-player .controls {
+.webvtt-player .point {
   padding: 5px;
-  text-align: center;
-  vertical-align: text-top;
-  background-color: #ccc;
 }
 
-.webvtt-player .seekBar {
-  vertical-align: middle;
-  width: 70%;
+.webvtt-player .time {
+  width: 110px;
+  float: left;
+  font-size: 10pt;
+  line-height: 14pt;
+  cursor: pointer;
 }
+
+.webvtt-player .text {
+  margin-left: 110px;
+}
+
+.webvtt-player .title {
+  font-weight: bold;
+  font-size: inherit;
+  margin: 0;
+  cursor: pointer;
+}
+
+.webvtt-player .titleAlt {
+  font-style: italic;
+  font-weight: normal;
+  font-size: inherit;
+  margin: 0;
+}
+
+.webvtt-player .field {
+  margin-top: 5px;
+}
+
+.webvtt-player .field span {
+  font-style: italic;
+}
+
 .search {
   border-top: thin solid #ccc;
   padding: 5px 5px 5px 5px;
@@ -79,3 +93,34 @@
   padding-left: 5px;
   padding-right: 5px;
 }
+.webvtt-player .media {
+  width: 100%;
+  border: thin solid #ccc;
+  margin-right: auto;
+}
+
+.webvtt-player audio {
+  width: 100%;
+  background-color: #ccc;
+}
+
+.webvtt-player audio::-webkit-media-controls-panel {
+  background-color: #ccc;
+}
+
+.webvtt-player .tracks {
+  display: flex;
+}
+
+.webvtt-player .controls {
+  padding: 5px;
+  text-align: center;
+  vertical-align: text-top;
+  background-color: #ccc;
+}
+
+.webvtt-player .seekBar {
+  vertical-align: middle;
+  width: 70%;
+}
+

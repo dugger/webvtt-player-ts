@@ -1,12 +1,12 @@
 import React from "react" 
 import PropTypes from "prop-types"
-import style from "./Search.css"
+import "./Search.css"
 
 const Search = ({ query, updateQuery }) => {
   return (
-    <div className={style.search}>
-      <div className={style.container}>
-        <span className={style.icon}>🔍</span>
+    <div className="search">
+      <div className="container">
+        <span className="icon">🔍</span>
         <input 
           value={query}
           onChange={e => updateQuery(e.target.value)} />
