@@ -1,5 +1,5 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended"
@@ -14,5 +14,11 @@
   },
   "rules": {
     "no-console": "off"
+  },
+  "parserOptions": {
+    "requireConfigFile": false,
+    "babelOptions": {
+      "presets": ["@babel/preset-env", "@babel/preset-react"]
+    }
   }
 }

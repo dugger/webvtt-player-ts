@@ -49,7 +49,7 @@ class Player extends React.Component {
             <audio
               controls
               crossOrigin="anonymous"
-              onLoad={this.onLoaded}
+              onLoadedData={this.onLoaded}
               preload={preload}
               ref={this.audio}>
               <source src={this.props.audio} />

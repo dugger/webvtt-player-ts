@@ -1,6 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const common = require('./webpack.config.js')
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require('webpack-dashboard/plugin');
@@ -29,7 +29,11 @@ module.exports = merge(common, {
   },
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: './example'
+    host: '0.0.0.0',
+    port: 3000,
+    static: {
+      directory: path.resolve(__dirname, './example/')
+    }
   },
   module: {
     rules: [
@@ -58,11 +62,6 @@ module.exports = merge(common, {
     new webpack.HotModuleReplacementPlugin(),
     new DashboardPlugin()
   ],
-  devServer: {
-    host: '0.0.0.0',
-    port: 3000,
-    contentBase: './example/'
-  },
   performance: {
     hints: false
   }

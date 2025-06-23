@@ -1,4 +1,5 @@
 const path = require("path")
+const ESLintPlugin = require('eslint-webpack-plugin')
 
 module.exports = {
   entry: {
@@ -16,11 +17,14 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        use: ["babel-loader", "eslint-loader"],
+        use: ["babel-loader"],
         exclude: /node_modules/
       }
     ]
   },
+  plugins: [
+    new ESLintPlugin()
+  ],
   resolve: {
     modules: ['node_modules'],
     extensions: ['.js']

@@ -1,23 +1,22 @@
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const common = require('./webpack.config.js')
-const ExtractTextPlugin = require("extract-text-webpack-plugin")
-
-const extractCSS = new ExtractTextPlugin('webvtt-player.css')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = merge(common, {
   module: {
     rules: [
       {
         test: /.css$/,
-        use: extractCSS.extract([
+        use: [
+          MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader'
-        ])          
+        ]
       }
     ]
   },
   plugins: [
-    extractCSS
+    new MiniCssExtractPlugin({ filename: 'webvtt-player.css' })
   ],
   externals: {
     react: {          
