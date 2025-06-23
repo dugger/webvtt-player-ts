@@ -12,6 +12,11 @@
 - [x] Fix CSS layout issues with flex-wrap
 - [x] Clean up unused dependencies (removed prop-types)
 - [x] Add proper package.json type: "module" entry
+- [x] **Add search bar positioning option** (top/bottom via `searchPosition` prop)
+- [x] **Ensure metadata display works in examples**
+- [x] **Fix ESLint configuration for TypeScript DOM types**
+- [x] **Bump version to 1.0.0 for stable release**
+- [x] **Update example structure for better separation**
 
 ## Next Steps 🚀
 
@@ -28,6 +33,7 @@
 - [ ] Add Storybook for component documentation and visual testing
 - [ ] Add integration tests for audio/transcript functionality
 - [ ] Create comprehensive API documentation
+- [ ] Add examples for different metadata formats
 
 ### Performance & Optimization
 - [ ] Add React.memo() for performance optimization where needed
@@ -45,6 +51,8 @@
 - [ ] Add support for playback speed control
 - [ ] Add support for volume control
 - [ ] Add support for fullscreen mode
+- [ ] Add support for multiple metadata tracks
+- [ ] Add support for custom metadata field rendering
 
 ### Build & Deployment
 - [ ] Set up automated testing in CI/CD
@@ -58,24 +66,29 @@
 - [ ] Add more comprehensive examples
 - [ ] Create interactive demo with different transcript types
 - [ ] Add examples for different use cases (podcasts, interviews, etc.)
+- [ ] Add examples showing different search bar positions
 
 ## Notes
 
-- The package now uses modern React patterns (hooks, functional components)
-- TypeScript provides better type safety and developer experience
-- Vite provides faster development and building
-- ESLint ensures code quality and consistency
-- The search bar is now positioned more intuitively
+- **Version 1.0.0 released**: The package is now stable with modern React patterns
+- **TypeScript provides better type safety** and developer experience
+- **Vite provides faster development** and building
+- **ESLint ensures code quality** and consistency
+- **Search bar positioning** allows for flexible UI layouts
+- **Metadata support** enables rich content annotation
+- **Modern React patterns** (hooks, functional components) throughout
 
 ## Priority Order
 
-1. **High Priority**: Prettier, pre-commit hooks, unit tests
-2. **Medium Priority**: Storybook, accessibility improvements, performance optimization
-3. **Low Priority**: Additional features, advanced documentation
+1. **High Priority**: Prettier, pre-commit hooks, unit tests, accessibility improvements
+2. **Medium Priority**: Storybook, performance optimization, additional metadata features
+3. **Low Priority**: Advanced features, comprehensive documentation
 
 ## Resources
 
 - [Vite Documentation](https://vitejs.dev/)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
-- [Storybook Documentation](https://storybook.js.org/docs/react/get-started/introduction) 
+- [Storybook Documentation](https://storybook.js.org/docs/react/get-started/introduction)
+- [WebVTT Specification](https://w3c.github.io/webvtt/)
+- [OHMS Indexing System](http://ohda.matrix.msu.edu/2014/11/indexing-interviews-in-ohms/) 

@@ -26,12 +26,13 @@ import { Player } from "webvtt-player-ts";
 ### Props
 
 #### `Player` component
-| Prop         | Type     | Description |
-|--------------|----------|-------------|
-| `audio`      | `string` | URL of the audio file |
-| `transcript` | `string` | URL of the WebVTT transcript file |
-| `metadata`   | `string` | (optional) URL of the WebVTT metadata file |
-| `preload`    | `boolean`| (optional) Preload the audio |
+| Prop             | Type                    | Description |
+|------------------|-------------------------|-------------|
+| `audio`          | `string`                | URL of the audio file |
+| `transcript`     | `string`                | URL of the WebVTT transcript file |
+| `metadata`       | `string`                | (optional) URL of the WebVTT metadata file |
+| `preload`        | `boolean`               | (optional) Preload the audio |
+| `searchPosition` | `'top' \| 'bottom'`     | (optional) Position of the search bar |
 
 #### TypeScript Example
 
@@ -42,6 +43,7 @@ import { Player } from "webvtt-player-ts";
   audio="/audio.mp3"
   transcript="/transcript.vtt"
   metadata="/metadata.vtt"
+  searchPosition="top"
   preload={true}
 />
 ```
@@ -55,7 +57,9 @@ npm install
 npm run dev
 ```
 
-Then open [http://localhost:3000](http://localhost:3000) in your browser. The demo is located in the `example/` directory and uses TypeScript.
+Then open [http://localhost:3000](http://localhost:3000) in your browser. The demo includes:
+- **Basic example**: Transcript only (`index.html`)
+- **Advanced example**: Transcript with metadata (`annotations.html`)
 
 To build the library for production:
 
@@ -98,3 +102,37 @@ Fields supported:
 `gpspoints` will be displayed as a link to Google Maps and `hyperlinks` will be displayed as a link.
 
 The metadata track can be loaded with the `metadata` parameter.
+
+## Search Bar Positioning
+
+The search bar can be positioned at the top or bottom of the transcript area using the `searchPosition` prop:
+
+```tsx
+// Search bar at bottom (default)
+<Player audio="..." transcript="..." />
+
+// Search bar at top
+<Player audio="..." transcript="..." searchPosition="top" />
+```
+
+## Version 1.0.0 Features
+
+- ✅ **TypeScript Support**: Full TypeScript migration with proper type definitions
+- ✅ **Modern React**: React 19 with hooks and functional components
+- ✅ **Vite Build System**: Fast development and optimized production builds
+- ✅ **Metadata Support**: OHMS Indexing system for rich content annotation
+- ✅ **Flexible Search**: Configurable search bar positioning
+- ✅ **ESLint v9+**: Modern linting with TypeScript and React support
+- ✅ **Improved Examples**: Separate examples for basic and advanced features
+
+## Contributing
+
+This project uses modern development tools:
+- **TypeScript** for type safety
+- **Vite** for fast development and building
+- **ESLint** for code quality
+- **React 19** with latest patterns
+
+## License
+
+MIT License - see [LICENSE](LICENSE) file for details.
