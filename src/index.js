@@ -4,4 +4,3 @@ import Transcript from './Transcript.jsx'
 import Metadata from './Metadata.jsx'
 
 export { Player, Search, Transcript, Metadata }
-export default Player

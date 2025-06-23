@@ -8,43 +8,31 @@
     "type": "git",
     "url": "https://github.com/edsu/webvtt-player.git"
   },
-  "main": "dist/webvtt-player.js",
+  "main": "dist/webvtt-player.umd.js",
+  "module": "dist/webvtt-player.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/webvtt-player.es.js",
+      "require": "./dist/webvtt-player.umd.js"
+    }
+  },
   "files": [
     "dist/"
   ],
   "scripts": {
-    "start": "webpack-dev-server --config webpack.dev.js --mode development",
-    "build": "webpack --config webpack.prod.js --mode production",
-    "build-public": "webpack --config webpack.public.js --mode production",
-    "publish": "npm run build-public && node utils/github-publish"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "vite --port 3000"
   },
   "devDependencies": {
-    "@babel/cli": "^7.27.2",
-    "@babel/core": "^7.27.4",
-    "@babel/eslint-parser": "^7.27.5",
-    "@babel/plugin-proposal-class-properties": "^7.18.6",
-    "@babel/plugin-transform-runtime": "^7.27.4",
-    "@babel/preset-env": "^7.27.2",
-    "@babel/preset-react": "^7.27.1",
-    "autoprefixer": "^10.4.21",
-    "babel-eslint": "^10.1.0",
-    "babel-loader": "^9.1.3",
-    "copy-webpack-plugin": "^12.0.0",
-    "css-loader": "^6.8.1",
+    "@vitejs/plugin-react": "^4.2.0",
+    "vite": "^6.2.0",
     "eslint": "^9.29.0",
     "eslint-plugin-react": "^7.37.5",
-    "eslint-webpack-plugin": "^4.0.1",
-    "gh-pages": "^6.3.0",
-    "html-webpack-plugin": "^5.5.3",
-    "mini-css-extract-plugin": "^2.9.2",
-    "postcss-loader": "^7.3.3",
     "prop-types": "^15.8.1",
-    "style-loader": "^3.3.4",
-    "webpack": "^5.99.0",
-    "webpack-cli": "^5.1.4",
-    "webpack-dashboard": "^3.3.8",
-    "webpack-dev-server": "^5.2.2",
-    "webpack-merge": "^5.10.0"
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.4.0"
   },
   "dependencies": {
     "react": "^19.1.0",
